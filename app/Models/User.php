@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Models\Lesson;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -67,16 +68,16 @@ class User extends Authenticatable
         //    ->count();
     }
 
-    public function canReserve(Lesson $lesson):void{
-        if($lesson->remainingCount()===0) {
+    public function canReserve(Lesson $lesson):void
+    {
+        if ($lesson->remainingCount()===0) {
             throw new \Exception('レッスンの予約可能上限に達しています。');
         }
-        if($this->profile->plan==='gold' ) {
+        if ($this->profile->plan==='gold') {
             return;
         }
-        if( $this->reservationCountThisMonth()===5){
+        if ($this->reservationCountThisMonth()===5) {
             throw new \Exception('今月の予約がプランの上限に達しています。');
         }
-
     }
 }
